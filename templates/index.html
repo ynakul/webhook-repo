@@ -1,0 +1,33 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Events</title>
+    <script>
+        async function fetchEvents() {
+            try {
+                const response = await fetch('/latest');
+                const data = await response.json();
+                const eventsList = document.getElementById('events');
+                eventsList.innerHTML = '';
+                data.forEach(event => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = event;
+                    eventsList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchEvents();
+            setInterval(fetchEvents, 15000); // Fetch events every 15 seconds
+        });
+    </script>
+</head>
+<body>
+    <h1>Latest GitHub Events</h1>
+    <ul id="events"></ul>
+</body>
+</html>
